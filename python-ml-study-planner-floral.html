@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python, ML and NLP: 8-week study planner</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Young+Serif&display=swap">
+<style>
+:root{
+  --bg:#E9F8F9;--surface:#FFFFFF;--ink:#3A1F33;--muted:#6B4C63;--line:#CFE3E6;
+  --berry:#DB4052;--berry-deep:#B22D43;--rose:#FFA0AC;--lilac:#EECAEA;--teal:#16C1C4;
+  --on-berry:#fff;--petal-off:#F6E3F3;
+  --head:"Young Serif",Georgia,"Times New Roman",serif;
+  --body:"Figtree","Helvetica Neue",Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#26142B;--surface:#341C3A;--ink:#FCEBF3;--muted:#D9B9CF;--line:#4D2E55;
+    --berry:#FF8A99;--berry-deep:#FFA0AC;--on-berry:#26142B;--petal-off:#4A2B52;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#26142B;--surface:#341C3A;--ink:#FCEBF3;--muted:#D9B9CF;--line:#4D2E55;
+  --berry:#FF8A99;--berry-deep:#FFA0AC;--on-berry:#26142B;--petal-off:#4A2B52;color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 var(--body)}
+main{max-width:900px;margin:0 auto;padding:40px 22px 72px}
+h1,h2,h3{font-family:var(--head);font-weight:400;line-height:1.15;margin:0}
+h1{font-size:clamp(2.2rem,6vw,3.5rem);letter-spacing:-.01em}
+h2{font-size:1.9rem;margin-bottom:.4rem}
+h3{font-size:1.25rem;margin:1.2rem 0 .3rem}
+p{margin:.5rem 0;max-width:66ch}
+section{margin-top:64px}
+b{font-weight:700}
+
+/* header with the progress flower */
+.hero{display:grid;grid-template-columns:1fr 210px;gap:28px;align-items:center}
+.lede{color:var(--muted);margin-top:14px;max-width:44ch}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:20px}
+.btn{font:700 .95rem var(--body);background:var(--berry);color:var(--on-berry);border:0;border-radius:999px;padding:11px 22px;cursor:pointer}
+.btn:hover{background:var(--berry-deep);color:#fff}
+.btn:focus-visible,.link:focus-visible,input:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+#status{font-size:.9rem;color:var(--muted)}
+#fallback{display:none;width:100%;font:.9rem var(--body);padding:9px 12px;border:2px solid var(--teal);border-radius:8px;background:var(--surface);color:var(--ink)}
+.flower{width:100%;height:auto;display:block}
+.petal{fill:var(--petal-off);stroke:var(--lilac);stroke-width:1.5;transition:fill .35s}
+.petal.on.a{fill:var(--berry)}
+.petal.on.b{fill:var(--rose)}
+.count{text-align:center;font-weight:700;font-size:.95rem;margin-top:2px}
+
+/* week strip */
+.track{margin-top:44px}
+.weeks,.bars{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
+.wk{font:700 .85rem var(--body);padding:11px 4px;text-align:center;border-radius:10px;color:var(--ink)}
+.wk small{display:block;font-weight:600;font-size:.72rem}
+.w1,.w2{background:var(--lilac)}
+.w3,.w4{background:var(--teal)}
+.w5,.w6{background:var(--rose)}
+.w7,.w8{background:var(--berry);color:var(--on-berry)}
+.bars{margin-top:6px}
+.bar{font:600 .8rem/1.35 var(--body);padding:8px 12px;border-radius:10px;background:var(--surface);border:2px solid var(--berry)}
+.bar.a{grid-column:1/3}
+.bar.b{grid-column:3/9;border-style:dashed}
+.bar.b span{font-weight:400;color:var(--muted)}
+
+/* growth stages */
+.phase{display:grid;grid-template-columns:64px 1fr;gap:6px 20px;margin-top:40px;padding-left:18px;border-left:6px solid var(--c)}
+.phase.s1{--c:var(--lilac)}.phase.s2{--c:var(--teal)}.phase.s3{--c:var(--rose)}.phase.s4{--c:var(--berry)}
+.phase svg{width:64px;height:64px}
+.when{font-weight:700;font-size:.9rem;color:var(--muted)}
+.phase h3{margin:0 0 .3rem}
+.body{grid-column:2}
+ul{margin:.4rem 0;padding-left:1.2rem}
+li{margin:.25rem 0}
+.checks{list-style:none;padding:0;margin:.4rem 0}
+.checks li{margin:.45rem 0}
+.checks label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.checks input{margin-top:.4rem;width:18px;height:18px;accent-color:var(--berry);flex:none}
+.checks input:checked+span{color:var(--muted);text-decoration:line-through}
+.cp{background:var(--surface);border-radius:14px;padding:4px 18px 10px;margin-top:14px}
+.cp h3{font-size:1.05rem;margin-top:.8rem}
+code{font:.88em ui-monospace,Menlo,Consolas,monospace;background:var(--lilac);color:#3A1F33;padding:1px 6px;border-radius:6px}
+
+/* projects */
+.proj{background:var(--surface);border-radius:18px;padding:8px 24px 16px;margin-top:22px;border-top:8px solid var(--rose)}
+.proj.big{border-top-color:var(--berry)}
+.resume{border-left:4px solid var(--teal);padding-left:14px;font-style:italic;margin-top:14px}
+.rhythm{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:16px}
+.rhythm div{background:var(--surface);border-radius:14px;padding:14px 16px}
+footer{margin-top:56px;color:var(--muted);font-size:.9rem}
+@media (max-width:620px){
+  .hero{grid-template-columns:1fr}
+  .flower-wrap{max-width:200px}
+  .wk small{display:none}
+  .bar{font-size:.7rem;padding:6px}
+  .phase{grid-template-columns:1fr;padding-left:14px}
+  .body{grid-column:1}
+}
+@media (prefers-reduced-motion:reduce){.petal{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="hero">
+    <div>
+      <h1>Grow from Python to NLP in 8 weeks</h1>
+      <p class="lede">Four stages, four checkpoints, two projects. Plan for 1–2 hours a day. Tick things off and the flower blooms.</p>
+      <div class="actions">
+        <button class="btn" id="share" type="button">Share this plan</button>
+        <span id="status" role="status" aria-live="polite"></span>
+        <input id="fallback" type="text" readonly aria-label="Link to copy">
+      </div>
+    </div>
+    <div class="flower-wrap">
+      <svg class="flower" id="flower" viewBox="0 0 200 250" role="img" aria-label="A flower whose petals fill in as you finish tasks">
+        <path d="M100 120 C98 170 102 200 100 244" stroke="#16C1C4" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <ellipse cx="72" cy="190" rx="26" ry="11" fill="#16C1C4" transform="rotate(-28 72 190)"/>
+        <ellipse cx="130" cy="214" rx="26" ry="11" fill="#16C1C4" opacity=".8" transform="rotate(26 130 214)"/>
+        <g id="petals"></g>
+        <circle cx="100" cy="100" r="19" fill="#FFD6DC" stroke="#DB4052" stroke-width="3"/>
+        <circle cx="100" cy="100" r="7" fill="#DB4052"/>
+      </svg>
+      <div class="count" id="count">0 of 0 done</div>
+    </div>
+  </div>
+
+  <div class="track" aria-label="Eight-week timeline">
+    <div class="weeks">
+      <div class="wk w1">W1<small>Python</small></div><div class="wk w2">W2<small>Python</small></div>
+      <div class="wk w3">W3<small>Data</small></div><div class="wk w4">W4<small>Data</small></div>
+      <div class="wk w5">W5<small>ML</small></div><div class="wk w6">W6<small>ML</small></div>
+      <div class="wk w7">W7<small>Deep NLP</small></div><div class="wk w8">W8<small>Ship</small></div>
+    </div>
+    <div class="bars">
+      <div class="bar a">Project 1: text statistics CLI</div>
+      <div class="bar b">Project 2: CEFR proficiency classifier <span>(data, then baseline, then transformer and API)</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="phases">
+  <h2>The four stages</h2>
+
+  <div class="phase s1">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="38" rx="13" ry="18" fill="#B8863F" transform="rotate(20 32 38)"/><path d="M26 28 C30 34 33 42 34 52" stroke="#6E4A1E" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+    <div><div class="when">Weeks 1–2</div><h3>Seed: Python foundations</h3></div>
+    <div class="body">
+      <p>Variables, loops, functions, lists, dicts and sets, file I/O, exceptions, modules, virtual environments, basic OOP, and <code>argparse</code>. Do 3–4 small exercises a day (Exercism, CodeWars, or Advent of Code).</p>
+      <div class="cp"><h3>Checkpoint 1</h3>
+        <ul class="checks">
+          <li><label><input type="checkbox"><span>I can write a 50-line script without copying</span></label></li>
+          <li><label><input type="checkbox"><span>I understand comprehensions and exception handling</span></label></li>
+          <li><label><input type="checkbox"><span>Project 1 is on GitHub with a README</span></label></li>
+        </ul></div>
+    </div>
+  </div>
+
+  <div class="phase s2">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 60 C32 44 32 34 32 24" stroke="#16C1C4" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="20" cy="26" rx="14" ry="7" fill="#16C1C4" transform="rotate(-30 20 26)"/><ellipse cx="44" cy="20" rx="14" ry="7" fill="#16C1C4" opacity=".75" transform="rotate(30 44 20)"/></svg>
+    <div><div class="when">Weeks 3–4</div><h3>Sprout: the data toolkit employers expect</h3></div>
+    <div class="body">
+      <ul>
+        <li><b>JSON and JSONL:</b> the <code>json</code> module, nested structures, validation with <code>pydantic</code> or <code>jsonschema</code></li>
+        <li><b>Regex</b> for text cleaning</li>
+        <li><b>NumPy and pandas:</b> loading, filtering, grouping, merging</li>
+        <li><b>Git and GitHub:</b> branches, commits, <code>.gitignore</code></li>
+        <li><b>pytest</b> basics and pinned dependencies</li>
+      </ul>
+      <p>Kick off Project 2: choose your dataset and design the JSON schema.</p>
+      <div class="cp"><h3>Checkpoint 2</h3>
+        <ul class="checks">
+          <li><label><input type="checkbox"><span>I can load a messy JSONL file into pandas and clean it</span></label></li>
+          <li><label><input type="checkbox"><span>I can explain train/test split and data leakage</span></label></li>
+          <li><label><input type="checkbox"><span>My data folder is organized and the schema is documented</span></label></li>
+        </ul></div>
+    </div>
+  </div>
+
+  <div class="phase s3">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 62 C32 50 32 44 32 36" stroke="#16C1C4" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M32 36 C20 30 22 12 32 4 C42 12 44 30 32 36Z" fill="#FFA0AC" stroke="#DB4052" stroke-width="2"/><path d="M32 10 C30 18 30 26 32 34" stroke="#DB4052" stroke-width="1.5" fill="none"/></svg>
+    <div><div class="when">Weeks 5–6</div><h3>Bud: ML fundamentals and classic NLP</h3></div>
+    <div class="body">
+      <ul>
+        <li>scikit-learn: pipelines, cross-validation, logistic regression, random forest</li>
+        <li>Metrics: precision, recall, F1, confusion matrix, class imbalance</li>
+        <li>spaCy: tokenization, POS tagging, lemmatization, dependency parsing</li>
+        <li>TF-IDF and n-gram features</li>
+      </ul>
+      <div class="cp"><h3>Checkpoint 3</h3>
+        <ul class="checks">
+          <li><label><input type="checkbox"><span>I can train, evaluate, and explain a baseline classifier</span></label></li>
+          <li><label><input type="checkbox"><span>I can extract linguistic features with spaCy</span></label></li>
+          <li><label><input type="checkbox"><span>The Project 2 baseline works and its scores are documented</span></label></li>
+        </ul></div>
+    </div>
+  </div>
+
+  <div class="phase s4">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><g fill="#DB4052"><ellipse cx="32" cy="14" rx="8" ry="13"/><ellipse cx="32" cy="14" rx="8" ry="13" transform="rotate(72 32 32)"/><ellipse cx="32" cy="14" rx="8" ry="13" transform="rotate(144 32 32)"/><ellipse cx="32" cy="14" rx="8" ry="13" transform="rotate(216 32 32)"/><ellipse cx="32" cy="14" rx="8" ry="13" transform="rotate(288 32 32)"/></g><circle cx="32" cy="32" r="8" fill="#FFD6DC"/><circle cx="32" cy="32" r="3.5" fill="#16C1C4"/></svg>
+    <div><div class="when">Weeks 7–8</div><h3>Bloom: transformers and shipping</h3></div>
+    <div class="body">
+      <p>Fine-tune a small pretrained model with Hugging Face <code>transformers</code> (DistilBERT or a multilingual equivalent), then wrap it in FastAPI. Docker basics are optional but valued.</p>
+      <div class="cp"><h3>Checkpoint 4</h3>
+        <ul class="checks">
+          <li><label><input type="checkbox"><span>Project 2 is published with a README, results, and error analysis</span></label></li>
+          <li><label><input type="checkbox"><span>I can explain every design decision in a 2-minute interview answer</span></label></li>
+        </ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2>The two projects</h2>
+
+  <div class="proj">
+    <h3>Project 1: Text Statistics CLI</h3>
+    <p>A command-line tool that reads any <code>.txt</code> file and reports token count, unique words, type-token ratio, average sentence length, and the top N words. It saves results to JSON and plots word rank against frequency, which shows Zipf’s law.</p>
+    <p><b>Builds:</b> file handling, dictionaries, functions, <code>argparse</code>, <code>json</code>, <code>matplotlib</code>, simple tests.</p>
+    <ul class="checks">
+      <li><label><input type="checkbox"><span>Runs on two different texts, for example a novel and news articles</span></label></li>
+      <li><label><input type="checkbox"><span>The README compares the results of both texts</span></label></li>
+    </ul>
+  </div>
+
+  <div class="proj big">
+    <h3>Project 2: CEFR Proficiency Classifier for Learner Texts</h3>
+    <p><b>Research question:</b> which linguistic features (lexical diversity, syntactic complexity, error patterns) best predict a learner’s proficiency level, A1 to C2? Do they differ from what a transformer relies on?</p>
+    <ul class="checks">
+      <li><label><input type="checkbox"><span><b>Data:</b> public learner corpus or CEFR-labelled dataset (check the license), stored as JSONL with a schema like <code>{id, text, cefr_level, l1, source}</code>, validated with <code>pydantic</code></span></label></li>
+      <li><label><input type="checkbox"><span><b>Features:</b> sentence length, type-token ratio, POS distribution, dependency depth, rare-word ratio (spaCy)</span></label></li>
+      <li><label><input type="checkbox"><span><b>Baselines:</b> logistic regression or random forest on features, plus TF-IDF</span></label></li>
+      <li><label><input type="checkbox"><span><b>Transformer:</b> fine-tune a small pretrained model and compare with the baselines</span></label></li>
+      <li><label><input type="checkbox"><span><b>Evaluation:</b> macro-F1, confusion matrix, cross-validation; note which neighboring levels get confused</span></label></li>
+      <li><label><input type="checkbox"><span><b>Error analysis:</b> examine misclassified texts and relate them to linguistic features (your research angle)</span></label></li>
+      <li><label><input type="checkbox"><span><b>API:</b> FastAPI endpoint that takes <code>{"text": "..."}</code> and returns <code>{"level": "B1", "confidence": 0.72}</code></span></label></li>
+      <li><label><input type="checkbox"><span><b>Engineering:</b> pytest tests, JSON or YAML config, pinned dependencies, seeded randomness, a model card with limitations and bias</span></label></li>
+      <li><label><input type="checkbox"><span><b>Stretch:</b> hand-label a small sample and report Cohen’s kappa, since annotation quality matters in computational linguistics roles</span></label></li>
+    </ul>
+    <p><b>What it shows employers:</b> JSON/JSONL handling, data validation, pandas, spaCy, scikit-learn, Hugging Face, evaluation discipline, API design, Git, testing, and documentation.</p>
+    <p class="resume">Built a CEFR proficiency classifier for learner English using spaCy features and a fine-tuned transformer (macro-F1 X); exposed via FastAPI with JSON I/O; performed linguistic error analysis.</p>
+  </div>
+</section>
+
+<section id="rhythm">
+  <h2>Weekly rhythm</h2>
+  <div class="rhythm">
+    <div><b>Monday to Thursday</b><br>Learn and do exercises, about 1 hour a day</div>
+    <div><b>Friday and Saturday</b><br>Project work</div>
+    <div><b>Sunday</b><br>Review, tick off checkpoints, commit your work</div>
+  </div>
+</section>
+
+<footer>Your ticks are saved in this browser only, so people you share the plan with start with a fresh flower.</footer>
+</main>
+
+<script>
+(function(){
+  var SHARE_URL='https://claude.ai/artifact/FqcxJksgxLGPsMwrd5nHvY';
+  var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox]'));
+  var KEY='py-ml-planner-v1',saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){saved={};}
+
+  var N=12,g=document.getElementById('petals'),ns='http://www.w3.org/2000/svg',petals=[];
+  for(var i=0;i<N;i++){
+    var p=document.createElementNS(ns,'ellipse');
+    p.setAttribute('cx','100');p.setAttribute('cy','52');p.setAttribute('rx','15');p.setAttribute('ry','34');
+    p.setAttribute('transform','rotate('+(i*360/N)+' 100 100)');
+    p.setAttribute('class','petal '+(i%2?'b':'a'));
+    g.appendChild(p);petals.push(p);
+  }
+
+  function update(){
+    var done=boxes.filter(function(b){return b.checked}).length;
+    var lit=boxes.length?Math.round(done/boxes.length*N):0;
+    petals.forEach(function(p,i){p.classList.toggle('on',i<lit)});
+    document.getElementById('count').textContent=done+' of '+boxes.length+' done';
+  }
+  boxes.forEach(function(b,i){
+    b.checked=!!saved[i];
+    b.addEventListener('change',function(){
+      saved[i]=b.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
+      update();
+    });
+  });
+  update();
+
+  var status=document.getElementById('status'),fb=document.getElementById('fallback');
+  function showFallback(){
+    fb.value=SHARE_URL;fb.style.display='block';fb.focus();fb.select();
+    status.textContent='Copy the link below';
+  }
+  document.getElementById('share').addEventListener('click',function(){
+    var data={title:'Python, ML and NLP: 8-week study planner',text:'An 8-week plan from Python basics to an NLP portfolio project.',url:SHARE_URL};
+    try{
+      if(navigator.share){
+        navigator.share(data).catch(function(err){if(err&&err.name!=='AbortError')showFallback();});
+        return;
+      }
+    }catch(e){}
+    try{
+      navigator.clipboard.writeText(SHARE_URL).then(function(){status.textContent='Link copied';},showFallback);
+    }catch(e){showFallback();}
+  });
+})();
+</script>
+</body>
+</html>
